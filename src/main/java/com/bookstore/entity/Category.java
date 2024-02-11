@@ -1,5 +1,4 @@
 package com.bookstore.entity;
-// Generated 10-Feb-2024, 10:01:38 pm by Hibernate Tools 3.6.2.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +18,10 @@ import javax.persistence.Table;
 @Table(name = "category", catalog = "bookstoredb")
 public class Category implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer categoryId;
 	private String name;
 	private Set<Book> books = new HashSet<Book>(0);
@@ -64,5 +67,4 @@ public class Category implements java.io.Serializable {
 	public void setBooks(Set<Book> books) {
 		this.books = books;
 	}
-
 }

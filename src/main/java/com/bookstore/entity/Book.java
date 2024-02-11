@@ -25,6 +25,10 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "book", catalog = "bookstoredb", uniqueConstraints = @UniqueConstraint(columnNames = "title"))
 public class Book implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer bookId;
 	private Category category;
 	private String title;
