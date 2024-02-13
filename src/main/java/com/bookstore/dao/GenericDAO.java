@@ -12,7 +12,11 @@ public interface GenericDAO<E, I> {
 
 	public void delete(Class<E> entityClass, I primaryKey);
 
-	public List<E> listAll(Class<E> entityClass);
+	public List<E> listAllByCriteria(Class<E> entityClass);
+	
+	public List<E> listAllByNamedQuery(String queryName);
 
-	public Long count(Class<E> entityClass);
+	public Long countByCriteria(Class<E> entityClass);
+	
+	public Long countByNamedQuery(String queryName);
 }

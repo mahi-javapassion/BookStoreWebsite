@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.bookstore.controller.admin.AdminConstants.ADMIN_HOME_PAGE_URL;
+
 /**
  * Servlet implementation class AdminServlet
  */
@@ -17,7 +19,6 @@ public class AdminServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
-	private static final String ADMIN_HOME_PAGE_URL = "index.jsp";
    
     public AdminServlet() {
         super();
