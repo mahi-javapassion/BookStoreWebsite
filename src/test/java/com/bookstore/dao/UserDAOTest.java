@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 
@@ -81,14 +82,24 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void testGetUsers() {
+	public void testGetUsersFound() {
 		Users dummyUser = createDummyUser();
 		
-		Users user1 = userDAO.get(Users.class, dummyUser.getUserId());
-		assertNotNull(user1.getUserId());
-		assertNotNull(user1.getFullName());
-		assertNotNull(user1.getEmail());
-		assertNotNull(user1.getPassword());
+		Users user = userDAO.get(Users.class, dummyUser.getUserId());
+		assertNotNull(user.getUserId());
+		assertNotNull(user.getFullName());
+		assertNotNull(user.getEmail());
+		assertNotNull(user.getPassword());
+		
+		deleteDummyUser(dummyUser);
+	}
+
+	@Test
+	public void testGetUsersNotFound() {
+		Users dummyUser = createDummyUser();
+		
+		Users user = userDAO.get(Users.class, Math.multiplyExact(dummyUser.getUserId(), -1));
+		assertNull(user);
 		
 		deleteDummyUser(dummyUser);
 	}
@@ -101,25 +112,47 @@ public class UserDAOTest {
 		assertNull(user2);
 	}
 
-	@Test
-	public void testListAll() {
-		Users dummyUser = createDummyUser();
+	@Test(expected = EntityNotFoundException.class)
+	public void testDeleteNonExistUsers() {
+		userDAO.delete(Users.class, Integer.MAX_VALUE-1);
+	}
 
-		List<Users> userList = userDAO.listAll(Users.class);
+	@Test
+	public void testListAllByCriteria() {
+		Users dummyUser = createDummyUser();
+		List<Users> userList = userDAO.listAllByCriteria(Users.class);
 		assertTrue(userList.size() >= 1);
 		
 		deleteDummyUser(dummyUser);
 	}
 
 	@Test
-	public void testCount() {
+	public void testListAllByNamedQuery() {
 		Users dummyUser = createDummyUser();
-		Long userCount = userDAO.count(Users.class);
+		List<Users> userList = userDAO.listAllByNamedQuery("Users.findAll");
+		assertTrue(userList.size() >= 1);
+		
+		deleteDummyUser(dummyUser);
+	}
+
+	@Test
+	public void testCountByNamedQuery() {
+		Users dummyUser = createDummyUser();
+		Long userCount = userDAO.countByNamedQuery();
 		assertTrue(userCount >= 1);
 		
 		deleteDummyUser(dummyUser);
 	}
-	
+
+	@Test
+	public void testCountByCriteria() {
+		Users dummyUser = createDummyUser();
+		Long userCount = userDAO.countByCriteria();
+		assertTrue(userCount >= 1);
+		
+		deleteDummyUser(dummyUser);
+	}
+
 	private Users createDummyUser() {
 		Users user1 = new Users();
 		user1.setEmail("mahesh-test@java.net");

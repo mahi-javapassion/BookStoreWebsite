@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -46,19 +47,29 @@ public class JpaDAO<E, I> implements GenericDAO<E, I> {
 
 	@Override
 	public E get(Class<E> entityClass, I primaryKey) {
-		return entityManager.find(entityClass, primaryKey);
+		E entity = entityManager.find(entityClass, primaryKey);
+		if(Objects.nonNull(entity)) {
+			entityManager.refresh(entity);
+		}
+		return entity;
 	}
 
 	@Override
 	public void delete(Class<E> entityClass, I primaryKey) {
 		entityManager.getTransaction().begin();
-		E entity = entityManager.find(entityClass, primaryKey);
-		entityManager.remove(entity);
+		E entityReference = entityManager.getReference(entityClass, primaryKey);
+		entityManager.remove(entityReference);
 		entityManager.getTransaction().commit();
 	}
 
 	@Override
-	public List<E> listAll(Class<E> entityClass) {
+	public List<E> listAllByNamedQuery(String queryName) {
+		Query query = entityManager.createNamedQuery(queryName);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<E> listAllByCriteria(Class<E> entityClass) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<E> cr = cb.createQuery(entityClass);
 		Root<E> root = cr.from(entityClass);
@@ -68,7 +79,13 @@ public class JpaDAO<E, I> implements GenericDAO<E, I> {
 	}
 
 	@Override
-	public Long count(Class<E> entityClass) {
+	public Long countByNamedQuery(String queryName) {
+		Query query = entityManager.createNamedQuery(queryName);
+		return (Long) query.getSingleResult();
+	}
+	
+	@Override
+	public Long countByCriteria(Class<E> entityClass) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cr = cb.createQuery(Long.class);
 		Root<E> root = cr.from(entityClass);
