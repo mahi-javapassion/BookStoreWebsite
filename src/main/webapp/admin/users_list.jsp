@@ -13,7 +13,16 @@
 	
 	<div align="center">
 		<h2>User Management</h2>
-		<h3><a href="">Create New User</a></h3>
+		<h3><a href="user_form.jsp">Create New User</a></h3>
+	</div>
+	
+	<div align="center">
+		<c:if test="${CREATE_USERS_SUCCESS_KEY != null}">
+			<h4 style="color:green;"><i>${CREATE_USERS_SUCCESS_KEY}</i></h4>
+		</c:if>
+		<c:if test="${USERS_EXISTS_KEY != null}">
+			<h4 style="color:red;"><i>${USERS_EXISTS_KEY}</i></h4>
+		</c:if>
 	</div>
 	
 	<div align="center">

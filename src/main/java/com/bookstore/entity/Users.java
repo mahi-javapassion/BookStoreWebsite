@@ -11,14 +11,16 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_ALL;
+import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_BY_EMAIL;
 import static com.bookstore.controller.admin.AdminConstants.USERS_COUNT_ALL;;
 
 @Entity
 @Table(name = "users", catalog = "bookstoredb")
 @NamedQueries({ 
 			@NamedQuery(name = USERS_FIND_ALL, query = "SELECT u FROM Users u ORDER BY u.fullName"),
-			@NamedQuery(name = USERS_COUNT_ALL, query = "SELECT count(*) FROM Users u")
-		})
+			@NamedQuery(name = USERS_COUNT_ALL, query = "SELECT count(*) FROM Users u"),
+			@NamedQuery(name = USERS_FIND_BY_EMAIL, query = "SELECT u FROM Users u WHERE u.email = :email")
+})
 public class Users implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -31,7 +33,7 @@ public class Users implements java.io.Serializable {
 	public Users() {
 	}
 
-	public Users(String email, String password, String fullName) {
+	public Users(String email, String fullName, String password) {
 		this.email = email;
 		this.password = password;
 		this.fullName = fullName;
