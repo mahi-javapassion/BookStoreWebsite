@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import com.bookstore.entity.Users;
 
 import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_ALL;
+import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_BY_EMAIL;
 import static com.bookstore.controller.admin.AdminConstants.USERS_COUNT_ALL;;
 
 public class UserDAO extends JpaDAO<Users, Integer> implements GenericDAO<Users, Integer>{
@@ -48,5 +49,9 @@ public class UserDAO extends JpaDAO<Users, Integer> implements GenericDAO<Users,
 
 	public Long countByCriteria() {
 		return super.countByCriteria(Users.class);
+	}
+	
+	public Users findByEmail(String email) {
+		return super.findOneByNamedQuery(USERS_FIND_BY_EMAIL, "email", email);
 	}
 }

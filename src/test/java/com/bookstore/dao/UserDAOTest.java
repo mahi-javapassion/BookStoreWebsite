@@ -1,6 +1,7 @@
 package com.bookstore.dao;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +20,6 @@ import com.bookstore.entity.Users;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
 
 public class UserDAOTest {
 
@@ -59,7 +59,7 @@ public class UserDAOTest {
 	public void testCreateUsers() {
 		Users dummyUser = createDummyUser();
 		assertNotNull(dummyUser.getUserId());
-		
+
 		deleteDummyUser(dummyUser);
 	}
 
@@ -74,33 +74,33 @@ public class UserDAOTest {
 		Users dummyUser = createDummyUser();
 		dummyUser.setPassword("password123");
 		userDAO.update(dummyUser);
-		
+
 		Users user2 = userDAO.get(Users.class, dummyUser.getUserId());
 		assertTrue(dummyUser.getPassword().equals(user2.getPassword()));
-		
+
 		deleteDummyUser(dummyUser);
 	}
 
 	@Test
 	public void testGetUsersFound() {
 		Users dummyUser = createDummyUser();
-		
+
 		Users user = userDAO.get(Users.class, dummyUser.getUserId());
 		assertNotNull(user.getUserId());
 		assertNotNull(user.getFullName());
 		assertNotNull(user.getEmail());
 		assertNotNull(user.getPassword());
-		
+
 		deleteDummyUser(dummyUser);
 	}
 
 	@Test
 	public void testGetUsersNotFound() {
 		Users dummyUser = createDummyUser();
-		
+
 		Users user = userDAO.get(Users.class, Math.multiplyExact(dummyUser.getUserId(), -1));
 		assertNull(user);
-		
+
 		deleteDummyUser(dummyUser);
 	}
 
@@ -114,7 +114,7 @@ public class UserDAOTest {
 
 	@Test(expected = EntityNotFoundException.class)
 	public void testDeleteNonExistUsers() {
-		userDAO.delete(Users.class, Integer.MAX_VALUE-1);
+		userDAO.delete(Users.class, Integer.MAX_VALUE - 1);
 	}
 
 	@Test
@@ -122,7 +122,7 @@ public class UserDAOTest {
 		Users dummyUser = createDummyUser();
 		List<Users> userList = userDAO.listAllByCriteria(Users.class);
 		assertTrue(userList.size() >= 1);
-		
+
 		deleteDummyUser(dummyUser);
 	}
 
@@ -131,7 +131,7 @@ public class UserDAOTest {
 		Users dummyUser = createDummyUser();
 		List<Users> userList = userDAO.listAllByNamedQuery("Users.findAll");
 		assertTrue(userList.size() >= 1);
-		
+
 		deleteDummyUser(dummyUser);
 	}
 
@@ -140,7 +140,7 @@ public class UserDAOTest {
 		Users dummyUser = createDummyUser();
 		Long userCount = userDAO.countByNamedQuery();
 		assertTrue(userCount >= 1);
-		
+
 		deleteDummyUser(dummyUser);
 	}
 
@@ -149,8 +149,39 @@ public class UserDAOTest {
 		Users dummyUser = createDummyUser();
 		Long userCount = userDAO.countByCriteria();
 		assertTrue(userCount >= 1);
-		
+
 		deleteDummyUser(dummyUser);
+	}
+
+	
+	@Test 
+	public void testfindByEmailFound() { 
+	  Users dummyUser =  createDummyUser("xyz123@gmail.com"); 
+	  Users resultUser = userDAO.findByEmail(dummyUser.getEmail());
+	  assertTrue(Objects.nonNull(resultUser)); 
+	  deleteDummyUser(dummyUser); 
+	}
+	  
+		
+	@Test 
+	public void testfindByEmailNotFound() { 
+		Users dummyUser = createDummyUser("xyz1234@gmail.com");
+		Users resultUser = null;
+		try {
+			resultUser = userDAO.findByEmail("xyz" + dummyUser.getEmail());
+		}
+		catch(Exception e) {}
+		assertTrue(Objects.isNull(resultUser)); 
+		deleteDummyUser(dummyUser); 
+	}
+		 	  
+	  
+	  private Users createDummyUser(String email) {
+		Users user1 = new Users();
+		user1.setEmail(email);
+		user1.setFullName("Mahesh Yerudkar");
+		user1.setPassword("password");
+		return userDAO.create(user1);
 	}
 
 	private Users createDummyUser() {
