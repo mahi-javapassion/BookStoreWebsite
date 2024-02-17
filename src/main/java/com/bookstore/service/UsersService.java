@@ -38,6 +38,10 @@ public class UsersService {
 		return userDAO.update(users);
 	}
 
+	public void deleteUser(Integer userId){
+		userDAO.delete(userId);
+	}
+
 	public List<Users> listUsers(){
 		return userDAO.listAllByNamedQuery();
 	}
