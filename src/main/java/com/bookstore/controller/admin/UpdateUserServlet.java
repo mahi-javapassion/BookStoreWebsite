@@ -67,7 +67,6 @@ public class UpdateUserServlet extends HttpServlet {
 				request.setAttribute(UPDATE_USERS_SUCCESS_KEY, String.format(UPDATE_USERS_SUCCESS_MSG, users.getUserId(), users.getEmail()));
 				request.setAttribute(USER_LIST, usersService.listUsers());
 				requestDispatcher = request.getRequestDispatcher(USER_LIST_PAGE);
-				requestDispatcher.forward(request, response);
 			}
 		}
 		requestDispatcher.forward(request, response);

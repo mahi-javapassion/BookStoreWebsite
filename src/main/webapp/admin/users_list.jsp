@@ -23,6 +23,15 @@
 		<c:if test="${UPDATE_USERS_SUCCESS_KEY != null}">
 			<h4 style="color:green;"><i>${UPDATE_USERS_SUCCESS_KEY}</i></h4>
 		</c:if>
+		<c:if test="${DELETE_USERS_SUCCESS_KEY != null}">
+			<h4 style="color:green;"><i>${DELETE_USERS_SUCCESS_KEY}</i></h4>
+		</c:if>
+		<c:if test="${USERS_NOT_FOUND_KEY != null}">
+			<h4 style="color:red;"><i>${USERS_NOT_FOUND_KEY}</i></h4>
+		</c:if>
+		<c:if test="${ADMIN_DELETE_KEY != null}">
+			<h4 style="color:red;"><i>${ADMIN_DELETE_KEY}</i></h4>
+		</c:if>
 	</div>
 	
 	<div align="center">
@@ -40,7 +49,7 @@
    			     	<td>${user.userId}</td>
    			     	<td>${user.email}</td>
    			     	<td>${user.fullName}</td>
-   			     	<td><a href="edit_user?userId=${user.userId}">Edit</a>&nbsp;&nbsp;&nbsp;<a href="#">Delete</a></td>
+   			     	<td><a href="edit_user?userId=${user.userId}">Edit</a>&nbsp;&nbsp;&nbsp;<a href="javascript:confirmDelete(${user.userId});">Delete</a></td>
    			     </tr>
    			</c:forEach>
    		</table>
@@ -49,5 +58,15 @@
 
 	<jsp:directive.include file="footer.jsp"/>
 	
+		<script type="text/javascript">
+	
+		function confirmDelete(userId) {
+			if(confirm("Are you sure, you want to delete user with User ID :" + userId)) {
+				window.location = "delete_user?userId=" + userId;
+			}
+		}
+
+	</script>
+
 </body>
 </html>

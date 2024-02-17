@@ -25,9 +25,15 @@ public class AdminConstants {
 	public static final String UPDATE_USERS_SUCCESS_KEY = "UPDATE_USERS_SUCCESS_KEY";
 	public static final String UPDATE_USERS_SUCCESS_MSG = "User with id : %s and email %s is updated successfully";
 
+	public static final String DELETE_USERS_SUCCESS_KEY = "DELETE_USERS_SUCCESS_KEY";
+	public static final String DELETE_USERS_SUCCESS_MSG = "User with id : %s is delete successfully";
+
 	public static final String USERS_EXISTS_KEY = "USERS_EXISTS_KEY";
 	public static final String USERS_EXISTS_MSG = "User with email '%s' already exists";
-	
+
+	public static final String ADMIN_DELETE_KEY = "ADMIN_DELETE_KEY";
+	public static final String ADMIN_DELETE_MSG = "The default admin user account cannot be deleted";
+
 	public static final String USERS_NOT_FOUND_KEY = "USERS_NOT_FOUND_KEY";
 	public static final String USERS_NOT_FOUND_MSG = "User with user id '%s' not found";
 
