@@ -27,15 +27,48 @@ public class UsersService {
 
 	public Users createUser(String email, String fullName, String password){
 		Users users = new Users(email, fullName, password);
+		return createUser(users);
+	}
+
+	public Users createUser(Users users){
 		return userDAO.create(users);
+	}
+
+	public Users updateUser(Users users){
+		return userDAO.update(users);
 	}
 
 	public List<Users> listUsers(){
 		return userDAO.listAllByNamedQuery();
 	}
 	
+	
 	public boolean isUserExists(String email) {
-		Users users = userDAO.findByEmail(email);
-		return Objects.nonNull(users);
+		try {
+			Users users = userDAO.findByEmail(email);
+			return Objects.nonNull(users);
+		}
+		catch(Exception exp) {
+		}
+		return false;
+	}
+
+	public boolean isUserExists(String email, Integer userId) {
+		try {
+			Users users = userDAO.findByEmailAndUserId(email, userId);
+			return Objects.nonNull(users);
+		}
+		catch(Exception exp) {
+		}
+		return false;
+	}
+
+	public Users getUser(Integer userId) {
+		try {
+			return userDAO.get(userId);
+		}
+		catch(Exception exp) {
+		}
+		return null;
 	}
 }

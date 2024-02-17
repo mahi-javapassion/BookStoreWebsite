@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_ALL;
 import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_BY_EMAIL;
+import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_BY_EMAIL_NOT_USERID;
 import static com.bookstore.controller.admin.AdminConstants.USERS_COUNT_ALL;;
 
 @Entity
@@ -19,7 +20,8 @@ import static com.bookstore.controller.admin.AdminConstants.USERS_COUNT_ALL;;
 @NamedQueries({ 
 			@NamedQuery(name = USERS_FIND_ALL, query = "SELECT u FROM Users u ORDER BY u.fullName"),
 			@NamedQuery(name = USERS_COUNT_ALL, query = "SELECT count(*) FROM Users u"),
-			@NamedQuery(name = USERS_FIND_BY_EMAIL, query = "SELECT u FROM Users u WHERE u.email = :email")
+			@NamedQuery(name = USERS_FIND_BY_EMAIL, query = "SELECT u FROM Users u WHERE u.email = :email"),
+			@NamedQuery(name = USERS_FIND_BY_EMAIL_NOT_USERID, query = "SELECT u FROM Users u WHERE u.email = :email and u.userId != :userId")
 })
 public class Users implements java.io.Serializable {
 

@@ -20,8 +20,8 @@
 		<c:if test="${CREATE_USERS_SUCCESS_KEY != null}">
 			<h4 style="color:green;"><i>${CREATE_USERS_SUCCESS_KEY}</i></h4>
 		</c:if>
-		<c:if test="${USERS_EXISTS_KEY != null}">
-			<h4 style="color:red;"><i>${USERS_EXISTS_KEY}</i></h4>
+		<c:if test="${UPDATE_USERS_SUCCESS_KEY != null}">
+			<h4 style="color:green;"><i>${UPDATE_USERS_SUCCESS_KEY}</i></h4>
 		</c:if>
 	</div>
 	
@@ -40,7 +40,7 @@
    			     	<td>${user.userId}</td>
    			     	<td>${user.email}</td>
    			     	<td>${user.fullName}</td>
-   			     	<td><a href="#">Edit</a>&nbsp;&nbsp;&nbsp;<a href="#">Delete</a></td>
+   			     	<td><a href="edit_user?userId=${user.userId}">Edit</a>&nbsp;&nbsp;&nbsp;<a href="#">Delete</a></td>
    			     </tr>
    			</c:forEach>
    		</table>
