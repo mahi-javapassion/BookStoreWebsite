@@ -8,6 +8,7 @@ import com.bookstore.entity.Users;
 
 import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_ALL;
 import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_BY_EMAIL;
+import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_BY_EMAIL_NOT_USERID;
 import static com.bookstore.controller.admin.AdminConstants.USERS_COUNT_ALL;;
 
 public class UserDAO extends JpaDAO<Users, Integer> implements GenericDAO<Users, Integer>{
@@ -53,5 +54,9 @@ public class UserDAO extends JpaDAO<Users, Integer> implements GenericDAO<Users,
 	
 	public Users findByEmail(String email) {
 		return super.findOneByNamedQuery(USERS_FIND_BY_EMAIL, "email", email);
+	}
+
+	public Users findByEmailAndUserId(String email, Integer userId) {
+		return super.findOneByNamedQuery(USERS_FIND_BY_EMAIL_NOT_USERID, "email", email, "userId", userId);
 	}
 }

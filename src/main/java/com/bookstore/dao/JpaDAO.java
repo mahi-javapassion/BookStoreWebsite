@@ -101,4 +101,12 @@ public class JpaDAO<E, I> implements GenericDAO<E, I> {
 		query.setParameter(paramName, paranValue);
 		return (E) query.getSingleResult();
 	}
+	
+	public E findOneByNamedQuery(String queryName, String paramName1, Object paranValue1, String paramName2, Object paranValue2) {
+		Query query = entityManager.createNamedQuery(queryName);
+		query.setParameter(paramName1, paranValue1);
+		query.setParameter(paramName2, paranValue2);
+		return (E) query.getSingleResult();
+	}
+
 }
