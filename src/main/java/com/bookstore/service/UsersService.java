@@ -1,14 +1,17 @@
 package com.bookstore.service;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import com.bookstore.dao.UserDAO;
 import com.bookstore.entity.Users;
+
+import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_ALL;
 
 public class UsersService {
 
@@ -23,6 +26,30 @@ public class UsersService {
 		entityManagerFactory = Persistence.createEntityManagerFactory("BookStoreWebsite");
 		entityManager = entityManagerFactory.createEntityManager();
 		userDAO =  new UserDAO(entityManager);
+	}
+
+	public List<Users> listUsers(){
+		return userDAO.listAllByNamedQuery(USERS_FIND_ALL);
+	}
+
+	public boolean isUserExists(String email) {
+		try {
+			List<Users> usersList = userDAO.findByEmail(email);
+			return CollectionUtils.isNotEmpty(usersList);
+		}
+		catch(Exception exp) {
+		}
+		return false;
+	}
+
+	public boolean isUserExists(String email, Integer userId) {
+		try {
+			List<Users> usersList = userDAO.findByEmailAndUserId(email, userId);
+			return CollectionUtils.isNotEmpty(usersList);
+		}
+		catch(Exception exp) {
+		}
+		return false;
 	}
 
 	public Users createUser(String email, String fullName, String password){
@@ -40,31 +67,6 @@ public class UsersService {
 
 	public void deleteUser(Integer userId){
 		userDAO.delete(userId);
-	}
-
-	public List<Users> listUsers(){
-		return userDAO.listAllByNamedQuery();
-	}
-	
-	
-	public boolean isUserExists(String email) {
-		try {
-			Users users = userDAO.findByEmail(email);
-			return Objects.nonNull(users);
-		}
-		catch(Exception exp) {
-		}
-		return false;
-	}
-
-	public boolean isUserExists(String email, Integer userId) {
-		try {
-			Users users = userDAO.findByEmailAndUserId(email, userId);
-			return Objects.nonNull(users);
-		}
-		catch(Exception exp) {
-		}
-		return false;
 	}
 
 	public Users getUser(Integer userId) {

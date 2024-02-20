@@ -1,4 +1,4 @@
-package com.bookstore.controller.admin;
+package com.bookstore.controller.admin.user;
 
 import static com.bookstore.controller.admin.AdminConstants.USERS_NOT_FOUND_KEY;
 import static com.bookstore.controller.admin.AdminConstants.USERS_NOT_FOUND_MSG;
@@ -41,5 +41,4 @@ public class EditUserServlet extends HttpServlet {
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(USER_FORM_PAGE);
 		requestDispatcher.forward(request, response);
 	}
-
 }
