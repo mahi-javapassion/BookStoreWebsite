@@ -16,7 +16,9 @@ public interface GenericDAO<E, I> {
 	
 	public List<E> listAllByNamedQuery(String queryName);
 	
-	public E findOneByNamedQuery(String queryName, String paramName, Object paranValue);
+	public List<E> findByNamedQuery(String queryName, String paramName, Object paranValue);
+
+	public List<E> findByNamedQuery(String queryName, String paramName1, Object paranValue1, String paramName2, Object paranValue2);
 
 	public Long countByCriteria(Class<E> entityClass);
 	

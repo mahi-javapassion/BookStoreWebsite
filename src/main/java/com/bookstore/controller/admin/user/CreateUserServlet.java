@@ -1,4 +1,4 @@
-package com.bookstore.controller.admin;
+package com.bookstore.controller.admin.user;
 
 import static com.bookstore.controller.admin.AdminConstants.CREATE_USERS_SUCCESS_KEY;
 import static com.bookstore.controller.admin.AdminConstants.CREATE_USERS_SUCCESS_MSG;

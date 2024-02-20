@@ -6,10 +6,8 @@ import javax.persistence.EntityManager;
 
 import com.bookstore.entity.Users;
 
-import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_ALL;
 import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_BY_EMAIL;
 import static com.bookstore.controller.admin.AdminConstants.USERS_FIND_BY_EMAIL_NOT_USERID;
-import static com.bookstore.controller.admin.AdminConstants.USERS_COUNT_ALL;;
 
 public class UserDAO extends JpaDAO<Users, Integer> implements GenericDAO<Users, Integer>{
 
@@ -36,27 +34,27 @@ public class UserDAO extends JpaDAO<Users, Integer> implements GenericDAO<Users,
 		super.delete(Users.class, userId);
 	}
 	
-	public List<Users> listAllByNamedQuery() {
-		return super.listAllByNamedQuery(USERS_FIND_ALL);
+	public List<Users> listAllByNamedQuery(String queryName) {
+		return super.listAllByNamedQuery(queryName);
 	}
 
 	public List<Users> listAllByCriteria() {
 		return super.listAllByCriteria(Users.class);
 	}
 	
-	public Long countByNamedQuery() {
-		return super.countByNamedQuery(USERS_COUNT_ALL);
+	public Long countByNamedQuery(String queryName) {
+		return super.countByNamedQuery(queryName);
 	}
 
 	public Long countByCriteria() {
 		return super.countByCriteria(Users.class);
 	}
 	
-	public Users findByEmail(String email) {
-		return super.findOneByNamedQuery(USERS_FIND_BY_EMAIL, "email", email);
+	public List<Users> findByEmail(String email) {
+		return super.findByNamedQuery(USERS_FIND_BY_EMAIL, "email", email);
 	}
 
-	public Users findByEmailAndUserId(String email, Integer userId) {
-		return super.findOneByNamedQuery(USERS_FIND_BY_EMAIL_NOT_USERID, "email", email, "userId", userId);
+	public List<Users> findByEmailAndUserId(String email, Integer userId) {
+		return super.findByNamedQuery(USERS_FIND_BY_EMAIL_NOT_USERID, "email", email, "userId", userId);
 	}
 }
